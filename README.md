@@ -108,7 +108,7 @@ auth_token = ""
 - output formats: human, json, yaml, toml
 - payloads can be created by the CLI or read from a file or stdin.
 
-## Implemented Resource
+## Implemented Resources
 ### Project resources
 |       | Available endpoints                                                                                                                                                                                   |
 |-------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -255,7 +255,7 @@ auth_token = ""
 | **☑** | `/job`                                                                                           |
 | ☐     | `/keys`                                                                                          |
 | ☐     | `/license`                                                                                       |
-| ☐     | `/markdown`                                                                                      |
+| **☑** | `/markdown`                                                                                      |
 | **☑** | `/merge_requests` (also available for groups and projects)                                       |
 | ☐     | `/environments/:id/metrics_dashboard/annotations`, `/clusters/:id/metrics_dashboard/annotations` |
 | ☐     | `/namespaces`                                                                                    |
