@@ -2,7 +2,7 @@
 name = "gitlab-cli"
 authors= ["Valvassori Moïse <moise.valvassori@gmail.com>"]
 description= "Command line interface to Gitlab's API"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
 homepage = "https://github.com/djedi23/gitlab_cli"
@@ -33,10 +33,3 @@ lto = true          # Enable Link Time Optimization
 codegen-units = 1   # Reduce number of codegen units to increase optimizations.
 panic = "abort"     # Abort on panic
 strip = true        # Automatically strip symbols from the binary.
-
-
-
-# [patch.crates-io]
-# crud-api = {path="../crud/crud-api"}
-# crud-auth = {path="../crud/crud-auth"}
-# crud-auth-bearer = {path="../crud/crud-auth-bearer"}
