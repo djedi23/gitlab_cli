@@ -3,6 +3,7 @@ mod branches;
 mod commit;
 mod diff;
 mod emails;
+mod events;
 mod export;
 mod groups;
 mod hooks;
@@ -33,6 +34,7 @@ use crate::{
   commit::{Commit, MergeBaseQuery},
   diff::DiffVersion,
   emails::{Email, EmailCreatePayload, EmailCreateWithValidationPayload},
+  events::{Event, EventFilter},
   export::{Export, ExportPayload, ExportRelation, ExportRelationQuery},
   groups::{
     create::GroupsCreatePayload, update::GroupsUpdatePayload, Group, GroupDetail,

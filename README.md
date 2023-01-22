@@ -242,7 +242,7 @@ auth_token = ""
 | ☐     | `/users/:id/custom_attributes` (also available for groups and projects)                          |
 | ☐     | `/deploy_keys` (also available for projects)                                                     |
 | ☐     | `/deploy_tokens` (also available for projects and groups)                                        |
-| ☐     | `/events`, `/users/:id/events` (also available for projects)                                     |
+| **☑** | `/events`, `/users/:id/events` (also available for projects)                                     |
 | ☐     | `/features`                                                                                      |
 | ☐     | `/geo_nodes`                                                                                     |
 | ☐     | `/analytics/group_activity/{issues_count}`                                                       |
