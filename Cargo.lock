@@ -297,9 +297,9 @@ dependencies = [
 
 [[package]]
 name = "crud-api"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "29774cb6aa1b8f1ce52af298e1ea5395e451e3092ca69d653aab4963e9b85aea"
+checksum = "db2194b31fdc0783ffffbe1728922e83f7b23873d2a2f12b084620b168c99bb7"
 dependencies = [
  "async-trait",
  "clap",
@@ -373,9 +373,9 @@ dependencies = [
 
 [[package]]
 name = "crud-auth-bearer"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "00c89d2d1d4b2c58211f586741dc9eebb66c0a8817d9e3d171de8a7fb976afb8"
+checksum = "18e3abd6c44bc36a9dee19c9552d4300c689d781acc764299b6dd9c10b11a0cf"
 dependencies = [
  "clap",
  "config",

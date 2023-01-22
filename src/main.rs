@@ -18,6 +18,7 @@ mod pipeline;
 mod projects;
 mod reference;
 mod repository;
+mod runner;
 mod star;
 mod tag;
 mod task;
@@ -45,7 +46,7 @@ use crate::{
     edit::IssueUpdatePayload,
     Issue, IssueFilter,
   },
-  jobs::{Job, JobFilter, JobTokenQuery, PipelineJobFilter, PlayJobPayload},
+  jobs::{Job, JobFilter, JobRunnerFilter, JobTokenQuery, PipelineJobFilter, PlayJobPayload},
   keys::{GpGKey, GpgKeyCreatePayload, SSHKey, SSHKeyCreatePayload},
   labels::{CreateLabelPayload, GroupLabelQuery, Label, LabelQuery, UpdateLabelPayload},
   lint::{Lint, LintCurrentProjectPayload, LintPayload, LintProjectPayload},
@@ -70,6 +71,7 @@ use crate::{
     file::{blame::Blame, File, FileCreatePayload, FileDeletePayload, FilePayload},
     tree::{Tree, TreeFilter},
   },
+  runner::{Runner, RunnerFilter, RunnerId, RunnerTokenPayload, RunnerUpdate},
   star::Starrers,
   tag::{CreateTagPayload, Tag, TagQuery},
   time::{IssueAddSpentTimeQuery, IssueTimeEstimateQuery, TimeStats},

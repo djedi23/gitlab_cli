@@ -185,7 +185,7 @@ auth_token = ""
 | ☐     | `/projects/:id/repository/submodules`                                                                                                                                                                 |
 | ☐     | `/projects/:id/issues/.../resource_label_events`, `/projects/:id/merge_requests/.../resource_label_events` (also available for groups)                                                                |
 | ☐     | `/projects/:id/packages/rubygems`                                                                                                                                                                     |
-| ☐     | `/projects/:id/runners` (also available standalone)                                                                                                                                                   |
+| **☑** | `/projects/:id/runners` (also available standalone)                                                                                                                                                   |
 | ☐     | `/projects/:id/search` (also available for groups and standalone)                                                                                                                                     |
 | **☑** | `/projects/:id/repository/tags`                                                                                                                                                                       |
 | ☐     | `/projects/:id/packages/terraform/mdoules` (also available standalone)                                                                                                                                |
@@ -265,7 +265,7 @@ auth_token = ""
 | ☐     | `/application/plan_limits`                                                                       |
 | ☐     | `/project_repository_storage_moves`                                                              |
 | ☐     | `/users/:id/projects` (also available for projects)                                              |
-| ☐     | `/runners` (also available for projects)                                                         |
+| **☑** | `/runners` (also available for projects)                                                         |
 | ☐     | `/search` (also available for groups and projects)                                               |
 | ☐     | `/usage_data` (For GitLab instance [Administrator](../user/permissions.md) users only)           |
 | ☐     | `/application/settings`                                                                          |

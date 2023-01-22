@@ -1,4 +1,4 @@
-use crate::{commit::Commit, pipeline::Pipeline, user::User};
+use crate::{commit::Commit, pipeline::Pipeline, projects::Project, runner::Runner, user::User};
 use crud_api::{Api, ApiInput};
 use serde::{Deserialize, Serialize};
 
@@ -73,6 +73,14 @@ use serde::{Deserialize, Serialize};
   cli_route = "/job",
   cli_help = "Retrieve the job that generated a job token.",
 ))]
+#[api(endpoint(
+  route = "/runners/{id}/jobs",
+  multiple_results,
+  query_struct = "JobRunnerFilter",
+  cli_route = "/runners/{id}/jobs",
+  cli_help = "List jobs that are being processed or were processed by the specified runner.",
+  cli_long_help = "List jobs that are being processed or were processed by the specified runner. The list of jobs is limited to projects where the user has at least the Reporter role.",
+))]
 pub(crate) struct Job {
   id: u32,
   name: String,
@@ -83,12 +91,13 @@ pub(crate) struct Job {
   #[api(table_skip)]
   tag: bool,
   #[api(table_skip)]
-  tag_list: Vec<String>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  tag_list: Option<Vec<String>>,
   #[api(table_skip)]
   web_url: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
-  coverage: Option<String>,
+  coverage: Option<f32>,
   #[api(table_skip)]
   allow_failure: bool,
   #[serde(skip_serializing_if = "Option::is_none")]
@@ -108,27 +117,16 @@ pub(crate) struct Job {
   #[serde(skip_serializing_if = "Option::is_none")]
   queued_duration: Option<f32>,
   #[api(table_skip)]
-  artifacts: Vec<Artifact>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  artifacts: Option<Vec<Artifact>>,
   user: User,
+  project: Project,
   commit: Commit,
   #[serde(skip_serializing_if = "Option::is_none")]
   #[api(table_skip)]
   runner: Option<Runner>,
   #[api(table_skip)]
   pipeline: Pipeline,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-struct Runner {
-  id: u32,
-  description: String,
-  ip_address: String,
-  active: bool,
-  is_shared: bool,
-  runner_type: String,
-  name: String,
-  online: bool,
-  status: String,
 }
 
 #[derive(Clone, Default, Debug, Serialize, Deserialize)]
@@ -191,6 +189,49 @@ pub(crate) struct PipelineJobFilter {
   )]
   #[serde(skip_serializing_if = "Option::is_none")]
   include_retried: Option<bool>,
+
+  #[api(
+    no_short,
+    heading = "Pagination",
+    help = "Page number.",
+    long_help = "Page number (default: 1)."
+  )]
+  page: Option<u32>,
+
+  #[api(
+    no_short,
+    long = "per-page",
+    heading = "Pagination",
+    help = "Number of items to list per page.",
+    long_help = "Number of items to list per page (default: 20, max: 100)."
+  )]
+  per_page: Option<u32>,
+}
+
+#[derive(ApiInput, Debug, Default, Serialize, Deserialize)]
+#[api(no_input_file)]
+pub(crate) struct JobRunnerFilter {
+  #[api(
+    no_short,
+    help = "Status of the job; one of: running, success, failed, canceled",
+    possible_values = "running,success,failed,canceled"
+  )]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  status: Option<String>,
+
+  #[api(no_short, long = "order-by", help = "Order jobs by id.")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  order_by: Option<String>,
+
+  #[api(
+    no_short,
+    long = "sort",
+    help = "Sort jobs in asc or desc order (default: desc).",
+    long_help = "Sort jobs in asc or desc order (default: desc). Specify order_by as well, including for id.",
+    possible_values = "asc,desc"
+  )]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  sort: Option<String>,
 
   #[api(
     no_short,

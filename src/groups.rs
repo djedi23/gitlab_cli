@@ -4,7 +4,7 @@ use crate::projects::Project;
 use crud_api::{Api, ApiInput};
 use serde::{Deserialize, Serialize};
 
-#[derive(Api, Serialize, Deserialize, Debug, Default)]
+#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)]
 #[api(
   endpoint(
     route = "/groups",
