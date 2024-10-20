@@ -93,8 +93,7 @@ pub(crate) struct LintProjectPayload {
     no_short,
     long = "ref",
     help = "When `dry_run` is `true`, sets the branch or tag to use.",
-    long_help = "When `dry_run` is `true`, sets the branch or tag to use. Defaults to the project's default branch when not set.",
-    possible_values = ""
+    long_help = "When `dry_run` is `true`, sets the branch or tag to use. Defaults to the project's default branch when not set."
   )]
   #[serde(skip_serializing_if = "Option::is_none", rename = "ref")]
   _ref: Option<String>,
@@ -124,8 +123,7 @@ pub(crate) struct LintCurrentProjectPayload {
     no_short,
     long = "ref",
     help = "When `dry_run` is `true`, sets the branch or tag to use.",
-    long_help = "When `dry_run` is `true`, sets the branch or tag to use. Defaults to the project's default branch when not set.",
-    possible_values = ""
+    long_help = "When `dry_run` is `true`, sets the branch or tag to use. Defaults to the project's default branch when not set."
   )]
   #[serde(skip_serializing_if = "Option::is_none", rename = "ref")]
   _ref: Option<String>,

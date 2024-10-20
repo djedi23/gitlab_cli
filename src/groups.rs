@@ -255,8 +255,7 @@ pub(crate) struct GroupsFilter {
     heading = "Filters",
     long = "with-custom-attributes",
     help = "Include custom attributes in response.",
-    long_help = "Include custom attributes in response. (administrators only)",
-    possible_values = ""
+    long_help = "Include custom attributes in response. (administrators only)"
   )]
   #[serde(skip_serializing_if = "Option::is_none")]
   with_custom_attributes: Option<bool>,
@@ -345,8 +344,7 @@ pub(crate) struct GroupsSharePayload {
     no_short,
     long = "group-access",
     help = "The access level to grant the group",
-    long_help = "The access level to grant the group",
-    possible_values = ""
+    long_help = "The access level to grant the group"
   )]
   group_access: u32,
 

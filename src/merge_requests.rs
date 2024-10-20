@@ -434,8 +434,7 @@ pub(crate) struct MergeRequestFilter {
     heading = "Filters",
     long = "author-username",
     help = "Returns merge requests created by the given username.",
-    long_help = "Returns merge requests created by the given username. Mutually exclusive with `author_id`.",
-    possible_values = ""
+    long_help = "Returns merge requests created by the given username. Mutually exclusive with `author_id`."
   )]
   #[serde(skip_serializing_if = "Option::is_none")]
   author_username: Option<String>,
