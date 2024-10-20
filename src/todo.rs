@@ -153,6 +153,6 @@ pub(crate) struct TodoFilter {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(untagged)] // Good luck serde !
 enum Target {
-  Issue(Issue),
-  MergeRequest(MergeRequest),
+  Issue(Box<Issue>),
+  MergeRequest(Box<MergeRequest>),
 }

@@ -55,7 +55,7 @@ pub(crate) struct Commit {
 
 impl Display for Commit {
   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-    f.write_str(&self.short_id.as_ref().unwrap_or(&self.id))
+    f.write_str(self.short_id.as_ref().unwrap_or(&self.id))
   }
 }
 

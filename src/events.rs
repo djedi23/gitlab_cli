@@ -62,7 +62,7 @@ enum EventPayload {
   #[serde(rename = "push_data")]
   PushData(PushData),
   #[serde(rename = "note")]
-  Note(Note),
+  Note(Box<Note>),
 }
 
 #[derive(Debug, Serialize, Deserialize)]
