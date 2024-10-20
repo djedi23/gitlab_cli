@@ -49,7 +49,7 @@ use crate::{
     Issue, IssueFilter,
   },
   jobs::{Job, JobFilter, JobRunnerFilter, JobTokenQuery, PipelineJobFilter, PlayJobPayload},
-  keys::{GpGKey, GpgKeyCreatePayload, SSHKey, SSHKeyCreatePayload},
+  keys::{GpGKey, GpgKeyCreatePayload, SSHKey, SSHKeyCreatePayload, SSHKeyFilter},
   labels::{CreateLabelPayload, GroupLabelQuery, Label, LabelQuery, UpdateLabelPayload},
   lint::{Lint, LintCurrentProjectPayload, LintPayload, LintProjectPayload},
   markdown::{Markdown, MarkdownQuery},
@@ -94,7 +94,7 @@ use crate::{
 use crud_api::{Api, ApiInput, ApiRun, EmptyResponse, Query};
 use crud_auth::CrudAuth;
 use crud_auth_bearer::Auth;
-use miette::{IntoDiagnostic, Result, WrapErr};
+use miette::Result;
 
 #[derive(ApiRun)]
 #[api(infos(

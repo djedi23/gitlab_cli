@@ -1,3 +1,4 @@
+use crate::user::User;
 use crud_api::{Api, ApiInput};
 use serde::{Deserialize, Serialize};
 
@@ -62,6 +63,22 @@ use serde::{Deserialize, Serialize};
     cli_help = "Get a single key.",
   )
 )]
+#[api(
+  endpoint(
+    route = "/keys",
+    query_struct = "SSHKeyFilter",
+    cli_route = "/keys/by_fingerprint",
+    cli_help = "Get user by fingerprint of SSH key.",
+    cli_long_help = "Get SSH key with user by ID of an SSH key. You can search for a user that owns a specific SSH key. Note only administrators can lookup SSH key with the fingerprint of an SSH key.",
+  ),
+  endpoint(
+    route = "/keys/{id}",
+    cli_route = "/keys/by_id/{id}",
+    cli_force_output_format = true,
+    cli_help = "Get SSH key with user by ID of an SSH key.",
+    cli_long_help = "Get SSH key with user by ID of an SSH key. Only available to administrators.",
+  )
+)]
 pub(crate) struct SSHKey {
   id: u32,
   #[serde(skip_serializing_if = "Option::is_none")]
@@ -71,6 +88,11 @@ pub(crate) struct SSHKey {
   created_at: String,
   #[serde(skip_serializing_if = "Option::is_none")]
   expires_at: Option<String>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  usage_type: Option<String>,
+  #[api(table_skip)]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  user: Option<User>,
 }
 
 #[derive(ApiInput, Serialize, Deserialize, Debug, Default)]
@@ -89,6 +111,12 @@ pub(crate) struct SSHKeyCreatePayload {
   )]
   #[serde(skip_serializing_if = "Option::is_none")]
   expires_at: Option<String>,
+}
+
+#[derive(ApiInput, Serialize, Deserialize, Debug, Default)]
+pub(crate) struct SSHKeyFilter {
+  #[api(no_short, heading = "Filter", help = "The fingerprint of an SSH key.")]
+  fingerprint: String,
 }
 
 #[derive(Api, Serialize, Deserialize, Debug, Default)]
