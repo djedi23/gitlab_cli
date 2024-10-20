@@ -5,6 +5,7 @@ mod diff;
 mod emails;
 mod events;
 mod export;
+mod features;
 mod groups;
 mod hooks;
 mod issues;
@@ -39,6 +40,7 @@ use crate::{
   emails::{Email, EmailCreatePayload, EmailCreateWithValidationPayload},
   events::{Event, EventFilter},
   export::{Export, ExportPayload, ExportRelation, ExportRelationQuery},
+  features::{Definition, Feature},
   groups::{
     create::GroupsCreatePayload, update::GroupsUpdatePayload, Group, GroupDetail,
     GroupTransferLocationQuery, GroupTransferQuery, GroupsDeleteQuery, GroupsFilter,
