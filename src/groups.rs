@@ -51,10 +51,10 @@ use serde::{Deserialize, Serialize};
     cli_help = "Creates a new project group.",
   ),
   endpoint(
-    route = "/groups",
+    route = "/groups/{id}",
     method = "PUT",
     payload_struct = "GroupsUpdatePayload",
-    cli_route = "/groups/edit",
+    cli_route = "/groups/{id}/edit",
     cli_long_help = "Updates the project group. Only available to group owners and administrators.",
     cli_help = "Updates the project group.",
   ),

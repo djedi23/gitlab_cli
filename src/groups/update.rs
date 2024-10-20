@@ -170,7 +170,7 @@ pub(crate) struct GroupsUpdatePayload {
 
   #[api(
     no_short,
-    long = "prevent-forking-outside-group",
+    long = "shared-runners-setting",
     help = "Enable or disable shared runners for a group's subgroups and projects.",
     possible_values = "enabled,disabled_with_override,disabled_and_unoverridable"
   )]
