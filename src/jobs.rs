@@ -1,4 +1,4 @@
-use crate::{commit::Commit, pipeline::Pipeline, projects::Project, runner::Runner, user::User};
+use crate::{commit::Commit, pipeline::Pipeline, runner::Runner, user::User};
 use crud_api::{Api, ApiInput};
 use serde::{Deserialize, Serialize};
 
@@ -120,7 +120,8 @@ pub(crate) struct Job {
   #[serde(skip_serializing_if = "Option::is_none")]
   artifacts: Option<Vec<Artifact>>,
   user: User,
-  project: Project,
+  #[api(table_skip)]
+  project: ProjectJob,
   commit: Commit,
   #[serde(skip_serializing_if = "Option::is_none")]
   #[api(table_skip)]
@@ -136,6 +137,11 @@ struct Artifact {
   filename: String,
   #[serde(skip_serializing_if = "Option::is_none")]
   file_format: Option<String>,
+}
+
+#[derive(Clone, Default, Debug, Serialize, Deserialize)]
+struct ProjectJob {
+  ci_job_token_scope_enabled: bool,
 }
 
 #[derive(ApiInput, Debug, Default, Serialize, Deserialize)]
