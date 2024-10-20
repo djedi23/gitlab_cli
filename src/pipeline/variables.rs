@@ -13,4 +13,14 @@ pub(crate) struct Variables {
   #[serde(skip_serializing_if = "Option::is_none")]
   variable_type: Option<String>,
   value: String,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  protected: Option<bool>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  masked: Option<bool>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  raw: Option<bool>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  environment_scope: Option<String>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  description: Option<String>,
 }

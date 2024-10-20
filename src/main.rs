@@ -68,6 +68,10 @@ use crate::{
       ProjectSharePayload, ProjectsForkQuery, ProjectsForksQuery, ProjectsSnapshot, TransferQuery,
     },
     create::ProjectsCreatePayload,
+    variables::{
+      ProjectVariables, ProjectsVariableCreatePayload, ProjectsVariableDeletePayload,
+      ProjectsVariableUpdatePayload,
+    },
     Project, ProjectDetailFilter, ProjectsFilter, UsersProjectsFilter,
   },
   repository::{

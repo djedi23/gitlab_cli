@@ -1,5 +1,6 @@
 pub mod actions;
 pub mod create;
+pub mod variables;
 
 use crate::{groups::SharedWithGroups, user::User};
 use crud_api::{Api, ApiInput};
