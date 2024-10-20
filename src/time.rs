@@ -1,7 +1,8 @@
 use crud_api::{Api, ApiInput};
+use crud_pretty_struct::PrettyPrint;
 use serde::{Deserialize, Serialize};
 
-#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)] // PrettyPrint
 #[api(
   endpoint(
     route = "/projects/{id}/issues/{iid}/time_estimate",
@@ -63,12 +64,15 @@ use serde::{Deserialize, Serialize};
     cli_help = "Resets the total spend time for this merge request to 0 seconds.",
   )
 )]
+#[derive(PrettyPrint)] // skip_none
 pub(crate) struct TimeStats {
   time_estimate: u32,
   total_time_spent: u32,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   human_time_estimate: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   human_total_time_spent: Option<String>,
 }
 

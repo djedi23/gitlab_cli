@@ -3,10 +3,11 @@ pub mod create;
 
 use crate::{groups::SharedWithGroups, user::User};
 use crud_api::{Api, ApiInput};
+use crud_pretty_struct::{formatters::bool_check_formatter, PrettyPrint};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)] // PrettyPrint
 #[api(
   endpoint(
     route = "/projects",
@@ -199,31 +200,40 @@ authentication, only public projects are returned."
     cli_help = "Get a list of projects shared to this group.",
   )
 )]
+#[derive(PrettyPrint)] // skip_none  formatter bool
 pub(crate) struct Project {
   id: u32,
   path_with_namespace: String,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   description: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   default_branch: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   #[api(table_skip)]
   visibility: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   ssh_url_to_repo: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   http_url_to_repo: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   web_url: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   #[api(table_skip)]
   readme_url: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   topics: Option<Vec<String>>,
   #[api(table_skip)]
   name: String,
@@ -233,178 +243,238 @@ pub(crate) struct Project {
   path: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   issues_enabled: Option<bool>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   #[api(table_skip)]
   open_issues_count: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   #[api(table_skip)]
   merge_requests_enabled: Option<bool>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   #[api(table_skip)]
   jobs_enabled: Option<bool>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   #[api(table_skip)]
   wiki_enabled: Option<bool>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   #[api(table_skip)]
   snippets_enabled: Option<bool>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   #[api(table_skip)]
   can_create_merge_request_in: Option<bool>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   #[api(table_skip)]
   resolve_outdated_diff_discussions: Option<bool>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   #[api(table_skip)]
   container_registry_access_level: Option<String>,
   #[api(table_skip)]
   created_at: String,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   last_activity_at: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   creator_id: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   import_status: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   archived: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   forks_count: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   star_count: Option<usize>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   avatar_url: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   shared_runners_enabled: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   runners_token: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   ci_default_git_depth: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   ci_forward_deployment_enabled: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   public_jobs: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   shared_with_groups: Option<Vec<SharedWithGroups>>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   only_allow_merge_if_pipeline_succeeds: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   allow_merge_on_skipped_pipeline: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   restrict_user_defined_variables: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   only_allow_merge_if_all_discussions_are_resolved: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   remove_source_branch_after_merge: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   request_access_enabled: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   merge_method: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   squash_option: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   autoclose_referenced_issues: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   suggestion_commit_message: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   marked_for_deletion_on: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   container_registry_image_prefix: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   issues_template: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   merge_requests_template: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
   #[api(table_skip)]
+  #[pretty(is_pretty, skip_none)]
   owner: Option<User>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   namespace: Option<Namespace>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   statistics: Option<Stattistics>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   _links: Option<Links>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PrettyPrint)] // skip_none
 pub(crate) struct Namespace {
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   id: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   name: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   path: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   kind: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   full_path: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PrettyPrint)] // skip_none
 pub(crate) struct Stattistics {
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   commit_count: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   storage_size: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   repository_size: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   wiki_size: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   lfs_objects_size: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   job_artifacts_size: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   packages_size: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   snippets_size: Option<u32>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PrettyPrint)] // skip_none
 pub(crate) struct Links {
   #[serde(rename = "self")]
   self_: String,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   issues: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   merge_requests: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   repo_branches: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   labels: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   events: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   members: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   cluster_agents: Option<String>,
 }
 

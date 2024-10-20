@@ -9,12 +9,6 @@ use serde::{Deserialize, Serialize};
     cli_help = "Get a list of currently authenticated user's preferences.",
   ),
   endpoint(
-    route = "/user",
-    cli_route = "/user",
-    query_struct = "CurrentUserSelector",
-    cli_help = "List current user.",
-  ),
-  endpoint(
     route = "/user/preferences",
     method = "PUT",
     cli_route = "/user/preferences/edit",

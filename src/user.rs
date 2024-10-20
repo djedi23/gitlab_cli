@@ -6,10 +6,13 @@ pub mod status;
 pub mod tokens;
 
 use crud_api::{Api, ApiInput};
+use crud_pretty_struct::{formatters::bool_check_formatter, PrettyPrint};
 use serde::{Deserialize, Serialize};
+use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::fmt::Display;
+use strum_macros::Display;
 
-#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)] // PrettyPrint
 #[api(
   endpoint(
     route = "/users",
@@ -276,135 +279,184 @@ use std::fmt::Display;
   cli_route = "/projects/{id}/merge_requests/{iid}/participants",
   cli_help = "Get a list of merge request participants.",
 ))]
+#[api(endpoint(
+  route = "/user",
+  cli_route = "/user",
+  query_struct = "CurrentUserSelector",
+  cli_help = "List current user.",
+))]
+#[derive(PrettyPrint)] // skip_none formatter bool
 pub(crate) struct User {
   id: u32,
   name: String,
   username: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   email: Option<String>,
   state: String,
   #[api(table_skip)]
   web_url: String,
   #[api(table_skip)]
   avatar_url: String,
+  #[pretty(skip_none)]
   #[serde(skip_serializing_if = "Option::is_none")]
   created_at: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   expires_at: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
-  access_level: Option<u32>,
+  #[pretty(skip_none)]
+  access_level: Option<AccessLevel>,
   #[api(table_skip)]
+  #[pretty(is_pretty, skip_none)]
   #[serde(skip_serializing_if = "Option::is_none")]
   group_saml_identity: Option<Identity>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   bio: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   bio_html: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   location: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   public_email: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   skype: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   linkedin: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   twitter: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   website_url: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   organization: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   job_title: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   pronouns: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   bot: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   work_information: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   followers: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   following: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   last_sign_in_at: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   confirmed_at: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   last_activity_on: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   theme_id: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   color_scheme_id: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   projects_limit: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   current_sign_in_at: Option<String>,
   #[api(table_skip)]
+  #[pretty(is_pretty)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   identities: Option<Vec<Identity>>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   can_create_group: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   can_create_project: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   two_factor_enabled: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   external: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   private_profile: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   commit_email: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   is_admin: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   note: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   shared_runners_minutes_limit: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   extra_shared_runners_minutes_limit: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   is_auditor: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   using_license_seat: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   namespace_id: Option<u32>,
   // #[api(table_skip)]
   // #[serde(skip_serializing_if = "Option::is_none")]
@@ -417,11 +469,12 @@ impl Display for User {
   }
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PrettyPrint)] // skip_none
 struct Identity {
   extern_uid: String,
   provider: String,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   saml_provider_id: Option<u32>,
 }
 
@@ -456,8 +509,7 @@ pub(crate) struct UsersFilter {
     no_short,
     heading = "Filters",
     help = "search for external users only with `external=true`.",
-    long_help = "search for external users only with `external=true`. It does not support `external=false`.",
-    possible_values = "true"
+    long_help = "search for external users only with `external=true`. It does not support `external=false`."
   )]
   #[serde(skip_serializing_if = "Option::is_none")]
   external: Option<bool>,
@@ -644,6 +696,19 @@ pub(crate) struct MembersPagination {
   per_page: Option<u32>,
 }
 
+#[derive(Debug, Default, ApiInput, Serialize_repr, Deserialize_repr, Display, Clone)]
+#[repr(u8)]
+pub enum AccessLevel {
+  #[default]
+  NoAccess = 0,
+  MinimalAccess = 5, // Introduced in GitLab 13.5.
+  Guest = 10,
+  Reporter = 20,
+  Developer = 30,
+  Maintainer = 40,
+  Owner = 50, // Valid for projects in GitLab 14.9 and later.
+}
+
 #[derive(Debug, Default, ApiInput, Serialize, Deserialize)]
 pub(crate) struct MemberCreatePayload {
   #[api(
@@ -654,7 +719,7 @@ pub(crate) struct MemberCreatePayload {
   user_id: String,
 
   #[api(no_short, long = "access-level", help = "A valid access level")]
-  access_level: u32,
+  access_level: AccessLevel,
 
   #[api(
     no_short,
@@ -693,7 +758,7 @@ pub(crate) struct MemberEditPayload {
 
   #[api(no_short, long = "access-level", help = "A valid access level")]
   #[serde(skip_serializing_if = "Option::is_none")]
-  access_level: Option<u32>,
+  access_level: Option<AccessLevel>,
 
   #[api(
     no_short,

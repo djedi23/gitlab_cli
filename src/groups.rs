@@ -2,9 +2,10 @@ pub mod create;
 pub mod update;
 use crate::projects::Project;
 use crud_api::{Api, ApiInput};
+use crud_pretty_struct::{formatters::bool_check_formatter, PrettyPrint};
 use serde::{Deserialize, Serialize};
 
-#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Api, Serialize, Deserialize, Debug, Default, Clone)] // PrettyPrint
 #[api(
   endpoint(
     route = "/groups",
@@ -113,6 +114,7 @@ use serde::{Deserialize, Serialize};
     cli_help = "Retrieve a list of groups to which the user can transfer a project.",
   )
 )]
+#[derive(PrettyPrint)] // skip_none formatter bool
 pub(crate) struct Group {
   id: u32,
   name: String,
@@ -121,8 +123,10 @@ pub(crate) struct Group {
   description: String,
   visibility: String,
   #[api(table_skip)]
+  #[pretty(formatter=bool_check_formatter)]
   share_with_group_lock: bool,
   #[api(table_skip)]
+  #[pretty(formatter=bool_check_formatter)]
   require_two_factor_authentication: bool,
   #[api(table_skip)]
   two_factor_grace_period: u32,
@@ -130,63 +134,78 @@ pub(crate) struct Group {
   project_creation_level: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   auto_devops_enabled: Option<bool>,
   #[api(table_skip)]
   subgroup_creation_level: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   emails_disabled: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   mentions_disabled: Option<bool>,
   #[api(table_skip)]
+  #[pretty(formatter=bool_check_formatter)]
   lfs_enabled: bool,
   #[api(table_skip)]
   default_branch_protection: u32,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   avatar_url: Option<String>,
   #[api(table_skip)]
   web_url: String,
   #[api(table_skip)]
+  #[pretty(formatter=bool_check_formatter)]
   request_access_enabled: bool,
   #[api(table_skip)]
   full_name: String,
   full_path: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   file_template_project_id: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   parent_id: Option<u32>,
   created_at: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   shared_runners_minutes_limit: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   extra_shared_runners_minutes_limit: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   marked_for_deletion_on: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   shared_projects: Option<Vec<Project>>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   shared_with_groups: Option<Vec<SharedWithGroups>>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   projects: Option<Vec<Project>>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PrettyPrint)] // skip_none
 pub(crate) struct SharedWithGroups {
   group_id: u32,
   group_name: String,
   group_full_path: String,
   group_access_level: u32,
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   expires_at: Option<String>,
 }
 

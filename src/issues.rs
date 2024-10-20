@@ -6,10 +6,14 @@ use crate::{
   milestones::Milestone, reference::References, task::TaskCompletionStatus, time::TimeStats, User,
 };
 use crud_api::{Api, ApiInput};
+use crud_pretty_struct::{
+  formatters::{bool_check_formatter, markdown_formatter},
+  PrettyPrint,
+};
 use miette::{IntoDiagnostic, WrapErr};
 use serde::{Deserialize, Serialize};
 
-#[derive(Api, Debug, Default, Deserialize, Serialize, Clone)]
+#[derive(Api, Debug, Default, Deserialize, Serialize, Clone)] // PrettyPrint
 #[api(
   endpoint(
     route = "/issues",
@@ -133,6 +137,7 @@ If the user is already subscribed to the issue, the status code 304 is returned.
   cli_route = "/projects/{id}/merge_requests/{iid}/closes_issues",
   cli_help = "Get all the issues that would be closed by merging the provided merge request.",
 ))]
+#[derive(PrettyPrint)] // skip_none formatter bool
 #[allow(dead_code, non_snake_case)]
 pub(crate) struct Issue {
   id: u32,
@@ -142,21 +147,24 @@ pub(crate) struct Issue {
   title: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=markdown_formatter)]
   description: Option<String>,
-  #[api(format(date(format = "%Y-%m-%d %H:%M:%S")))]
+  #[api(table_format(date(format = "%Y-%m-%d %H:%M:%S")))]
   updated_at: String,
   #[api(table_skip)]
   web_url: String,
-  #[api(format(date(format = "%Y-%m-%d %H:%M:%S")))]
+  #[api(table_format(date(format = "%Y-%m-%d %H:%M:%S")))]
   created_at: String,
   #[serde(rename = "type")]
   #[api(table_skip)]
   type_: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   closed_at: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   moved_to_id: Option<u32>,
   #[api(table_skip)]
   upvotes: u32,
@@ -168,52 +176,69 @@ pub(crate) struct Issue {
   user_notes_count: u32,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   due_date: Option<String>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   has_tasks: Option<bool>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   task_status: Option<String>,
   #[api(table_skip)]
+  #[pretty(formatter=bool_check_formatter)]
   confidential: bool,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none, formatter=bool_check_formatter)]
   discussion_locked: Option<bool>,
   #[api(table_skip)]
   issue_type: String,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   weight: Option<u32>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(skip_none)]
   health_status: Option<String>,
   labels: Vec<String>,
   #[api(table_skip)]
+  #[pretty(is_pretty)]
   assignees: Vec<User>,
   #[api(table_skip)]
+  #[pretty(is_pretty)]
   author: User,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   milestone: Option<Milestone>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   assignee: Option<User>, // WARNING: The assignee column is deprecated. We now show it as a single-sized array assignees to conform to the GitLab EE API.
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   closed_by: Option<User>,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   references: Option<References>,
   #[api(table_skip)]
+  #[pretty(is_pretty)]
   time_stats: TimeStats,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   _links: Option<Links>,
   #[api(table_skip)]
+  #[pretty(is_pretty)]
   task_completion_status: TaskCompletionStatus,
   #[api(table_skip)]
   #[serde(skip_serializing_if = "Option::is_none")]
+  #[pretty(is_pretty, skip_none)]
   epic: Option<Epic>,
 }
 
@@ -481,7 +506,7 @@ pub(crate) struct IssueFilter {
   per_page: Option<u32>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PrettyPrint)] // skip_none
 pub(crate) struct Links {
   #[serde(rename = "self")]
   self_: String,
@@ -490,7 +515,7 @@ pub(crate) struct Links {
   project: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PrettyPrint)]
 pub(crate) struct Epic {
   id: u32,
   iid: u32,

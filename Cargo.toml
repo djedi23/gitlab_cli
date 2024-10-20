@@ -2,29 +2,35 @@
 name = "gitlab-cli"
 authors= ["Valvassori Moïse <moise.valvassori@gmail.com>"]
 description= "Command line interface to Gitlab's API"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "MIT"
 homepage = "https://github.com/djedi23/gitlab_cli"
 repository = "https://github.com/djedi23/gitlab_cli"
 
 [dependencies]
-chrono = "0.4"
-clap = "4.0"
-crud-api = {version="0.1", default-features=false, features=["toml","json","yaml"]}
+chrono = { version = "0.4", default-features = false, features = ["std","serde","clock"] }
+clap = { version = "4.4", features = ["color","suggestions","env","unicode","wrap_help","cargo"] }
 # crud-api = {version="0.1", default-features=false, features=["toml","json","yaml","debug-http"]}
+crud-api = {version="0.1", default-features=false, features=["toml","json","yaml"]}
 crud-auth = {version="0.1"}
 crud-auth-bearer = {version="0.1"}
-hyper = "0.14"
+crud-pretty-struct = {version="0.1", features=["markdown"]}
+
+hyper = { version = "1", features = ["client","http1"] }
 log = "0.4"
 
-miette = { version = "5.2", features = ["fancy"] }
-pretty_env_logger = "0.4"
+miette = { version = "5.9", features = ["fancy"] }
+pretty_env_logger = "0.5"
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
 # To force static openssl
 openssl = { version = "0.10", features = ["vendored"] }
-
+serde_repr = "0.1"
+strum = "0.25"
+strum_macros = "0.25"
+serde_yaml = "0.9"
+is-terminal = "0.4"
 
 
 [profile.release]
