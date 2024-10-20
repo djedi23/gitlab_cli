@@ -28,7 +28,10 @@ mod todo;
 mod user;
 mod version;
 
+mod access_token; // should be listed after "user".
+
 use crate::{
+  access_token::{AccessToken, AccessTokenCreatePayload},
   badges::{Badge, BadgeCreatePayload, BadgeQuery},
   branches::{Branch, BranchCreatePayload, BranchQuery},
   commit::{Commit, MergeBaseQuery},
